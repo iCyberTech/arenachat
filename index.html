@@ -1376,26 +1376,37 @@
                 });
         });
 
-        // Registration form submission
+        // Registration form submission - FIXED FOR MOBILE
         document.getElementById('registerForm').addEventListener('submit', async (e) => {
             e.preventDefault();
+            e.stopPropagation();
             
             const name = document.getElementById('registerName').value.trim();
             const email = document.getElementById('registerEmail').value;
             const password = document.getElementById('registerPassword').value;
             const confirmPassword = document.getElementById('registerConfirmPassword').value;
             
-            // Validate passwords match
+            // Validate inputs
+            if (!name || !email || !password || !confirmPassword) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
             if (password !== confirmPassword) {
                 alert('Passwords do not match');
+                return;
+            }
+            
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters');
                 return;
             }
             
             // Show loading state
             const registerBtn = document.getElementById('registerBtn');
             const registerBtnText = document.getElementById('registerBtnText');
-            registerBtnText.innerHTML = '<span class="spinner"></span> Creating account...';
             registerBtn.disabled = true;
+            registerBtnText.innerHTML = '<span class="spinner"></span> Creating account...';
             
             try {
                 // Create user with email and password
@@ -1406,9 +1417,27 @@
                     displayName: name
                 });
                 
-                // Auth state listener will handle the rest
+                // Save user to database
+                await saveUserToDatabase({
+                    uid: userCredential.user.uid,
+                    name: name,
+                    email: email
+                });
+                
+                // Auth state listener will handle the UI change
             } catch (error) {
-                alert('Registration error: ' + error.message);
+                console.error('Registration error:', error);
+                let errorMessage = 'Registration failed. Please try again.';
+                
+                if (error.code === 'auth/email-already-in-use') {
+                    errorMessage = 'This email is already in use.';
+                } else if (error.code === 'auth/invalid-email') {
+                    errorMessage = 'Please enter a valid email address.';
+                } else if (error.code === 'auth/weak-password') {
+                    errorMessage = 'Password should be at least 6 characters.';
+                }
+                
+                alert(errorMessage);
                 registerBtnText.textContent = 'Create Account';
                 registerBtn.disabled = false;
             }
