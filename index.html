@@ -601,40 +601,43 @@
             font-weight: 600;
         }
 
-        /* Login Form */
-        .login-container {
+        /* Auth Container */
+        .auth-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: calc(100vh - 80px);
+            min-height: calc(100vh - 80px);
+            padding: 2rem 0;
         }
 
-        .login-card {
+        /* Auth Card */
+        .auth-card {
             background-color: var(--card-bg);
             border-radius: var(--border-radius);
             padding: 2rem;
             box-shadow: var(--box-shadow);
             width: 100%;
             max-width: 400px;
+            margin: 1rem;
         }
 
-        .login-card h2 {
+        .auth-card h2 {
             text-align: center;
             color: var(--primary-color);
             margin-bottom: 1.5rem;
         }
 
-        .login-form .form-group {
+        .auth-form .form-group {
             margin-bottom: 1.5rem;
         }
 
-        .login-form label {
+        .auth-form label {
             display: block;
             margin-bottom: 0.5rem;
             color: var(--text-light);
         }
 
-        .login-form input {
+        .auth-form input {
             width: 100%;
             padding: 0.8rem 1rem;
             border: 1px solid #ddd;
@@ -646,13 +649,13 @@
             color: var(--text-color);
         }
 
-        .login-form input:focus {
+        .auth-form input:focus {
             outline: none;
             border-color: var(--secondary-color);
             box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.2);
         }
 
-        .login-btn {
+        .auth-btn {
             background-color: var(--secondary-color);
             color: #333;
             border: none;
@@ -665,7 +668,7 @@
             width: 100%;
         }
 
-        .login-btn:hover {
+        .auth-btn:hover {
             background-color: var(--secondary-light);
             transform: translateY(-3px);
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
@@ -684,6 +687,36 @@
 
         .auth-toggle a:hover {
             text-decoration: underline;
+        }
+
+        /* Auth Tabs */
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+        }
+
+        .auth-tab.active {
+            border-bottom-color: var(--secondary-color);
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+
+        .auth-tab-content {
+            display: none;
+        }
+
+        .auth-tab-content.active {
+            display: block;
         }
 
         /* Theme Switcher */
@@ -847,23 +880,56 @@
 
     <!-- Main Content -->
     <main>
-        <!-- Login Form (shown when not authenticated) -->
-        <div class="login-container" id="authContainer">
-            <div class="login-card">
-                <h2>Welcome to Group Chats</h2>
-                <form class="login-form" id="loginForm">
-                    <div class="form-group">
-                        <label for="loginEmail">Email</label>
-                        <input type="email" id="loginEmail" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="loginPassword">Password</label>
-                        <input type="password" id="loginPassword" class="form-control" required>
-                    </div>
-                    <button type="submit" class="login-btn" id="loginBtn">Sign In</button>
-                </form>
+        <!-- Auth Container (shown when not authenticated) -->
+        <div class="auth-container" id="authContainer">
+            <div class="auth-card">
+                <div class="auth-tabs">
+                    <div class="auth-tab active" data-tab="login">Sign In</div>
+                    <div class="auth-tab" data-tab="signup">Sign Up</div>
+                </div>
+                
+                <!-- Login Form -->
+                <div class="auth-tab-content active" id="loginTab">
+                    <h2>Welcome to Group Chats</h2>
+                    <form class="auth-form" id="loginForm">
+                        <div class="form-group">
+                            <label for="loginEmail">Email</label>
+                            <input type="email" id="loginEmail" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" class="form-control" required>
+                        </div>
+                        <button type="submit" class="auth-btn" id="loginBtn">Sign In</button>
+                    </form>
+                </div>
+                
+                <!-- Sign Up Form -->
+                <div class="auth-tab-content" id="signupTab">
+                    <h2>Create an Account</h2>
+                    <form class="auth-form" id="signupForm">
+                        <div class="form-group">
+                            <label for="signupName">Full Name</label>
+                            <input type="text" id="signupName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signupEmail">Email</label>
+                            <input type="email" id="signupEmail" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signupPassword">Password</label>
+                            <input type="password" id="signupPassword" class="form-control" required minlength="6">
+                        </div>
+                        <div class="form-group">
+                            <label for="signupConfirmPassword">Confirm Password</label>
+                            <input type="password" id="signupConfirmPassword" class="form-control" required minlength="6">
+                        </div>
+                        <button type="submit" class="auth-btn" id="signupBtn">Create Account</button>
+                    </form>
+                </div>
+                
                 <div class="auth-toggle">
-                    <span>Need an account? Contact church admin</span>
+                    <span id="toggleText">Need an account? <a href="#" id="toggleAuth">Sign Up</a></span>
                 </div>
             </div>
         </div>
@@ -1060,6 +1126,17 @@
                     email: user.email
                 };
                 
+                // Save user data to database if it doesn't exist
+                database.ref('users/' + user.uid).once('value').then(snapshot => {
+                    if (!snapshot.exists()) {
+                        database.ref('users/' + user.uid).set({
+                            name: user.displayName || user.email.split('@')[0],
+                            email: user.email,
+                            createdAt: firebase.database.ServerValue.TIMESTAMP
+                        });
+                    }
+                });
+                
                 // Check if we're viewing a specific group chat
                 const urlParams = new URLSearchParams(window.location.search);
                 const groupId = urlParams.get('groupId');
@@ -1125,6 +1202,39 @@
             });
         }
 
+        // Auth tab switching
+        document.querySelectorAll('.auth-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.auth-tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab + 'Tab').classList.add('active');
+                
+                // Update toggle text
+                if (tab.dataset.tab === 'login') {
+                    document.getElementById('toggleText').innerHTML = 'Need an account? <a href="#" id="toggleAuth">Sign Up</a>';
+                } else {
+                    document.getElementById('toggleText').innerHTML = 'Already have an account? <a href="#" id="toggleAuth">Sign In</a>';
+                }
+            });
+        });
+
+        // Toggle between login and signup
+        document.getElementById('toggleAuth').addEventListener('click', (e) => {
+            e.preventDefault();
+            const loginTab = document.querySelector('.auth-tab[data-tab="login"]');
+            const signupTab = document.querySelector('.auth-tab[data-tab="signup"]');
+            
+            if (loginTab.classList.contains('active')) {
+                signupTab.click();
+            } else {
+                loginTab.click();
+            }
+        });
+
         // Login form submission
         document.getElementById('loginForm').addEventListener('submit', (e) => {
             e.preventDefault();
@@ -1143,8 +1253,52 @@
                 })
                 .catch(error => {
                     alert('Login error: ' + error.message);
-                    loginBtn.textContent = 'Sign In';
+                    loginBtn.innerHTML = 'Sign In';
                     loginBtn.disabled = false;
+                });
+        });
+
+        // Signup form submission
+        document.getElementById('signupForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('signupConfirmPassword').value;
+            
+            // Validate passwords match
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
+                return;
+            }
+            
+            // Show loading state
+            const signupBtn = document.getElementById('signupBtn');
+            signupBtn.innerHTML = '<span class="spinner"></span> Creating account...';
+            signupBtn.disabled = true;
+            
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Update user profile with name
+                    return userCredential.user.updateProfile({
+                        displayName: name
+                    }).then(() => {
+                        // Create user record in database
+                        return database.ref('users/' + userCredential.user.uid).set({
+                            name: name,
+                            email: email,
+                            createdAt: firebase.database.ServerValue.TIMESTAMP
+                        });
+                    });
+                })
+                .then(() => {
+                    // Success - auth state listener will handle the UI change
+                })
+                .catch(error => {
+                    alert('Signup error: ' + error.message);
+                    signupBtn.innerHTML = 'Create Account';
+                    signupBtn.disabled = false;
                 });
         });
 
