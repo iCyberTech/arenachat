@@ -135,6 +135,123 @@
             color: var(--secondary-color);
         }
 
+        /* Auth Container */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 80px);
+            padding: 2rem 0;
+        }
+
+        /* Auth Card */
+        .auth-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--box-shadow);
+            width: 100%;
+            max-width: 400px;
+            transition: var(--transition);
+        }
+
+        .auth-card h2 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--text-light);
+        }
+
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 2px solid transparent;
+        }
+
+        .auth-tab.active {
+            border-bottom: 2px solid var(--secondary-color);
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.2);
+        }
+
+        .auth-btn {
+            background-color: var(--secondary-color);
+            color: #333;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+
+        .auth-btn:hover {
+            background-color: var(--secondary-light);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .auth-toggle {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--text-light);
+        }
+
+        .auth-toggle a {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        .auth-toggle a:hover {
+            text-decoration: underline;
+        }
+
         /* Main Layout */
         .main-layout {
             display: flex;
@@ -625,91 +742,6 @@
             font-weight: 600;
         }
 
-        /* Login Form */
-        .login-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: calc(100vh - 80px);
-        }
-
-        .login-card {
-            background-color: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            box-shadow: var(--box-shadow);
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .login-card h2 {
-            text-align: center;
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-        }
-
-        .login-form .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .login-form label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-light);
-        }
-
-        .login-form input {
-            width: 100%;
-            padding: 0.8rem 1rem;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            font-family: inherit;
-            font-size: 1rem;
-            transition: var(--transition);
-            background-color: var(--bg-color);
-            color: var(--text-color);
-        }
-
-        .login-form input:focus {
-            outline: none;
-            border-color: var(--secondary-color);
-            box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.2);
-        }
-
-        .login-btn {
-            background-color: var(--secondary-color);
-            color: #333;
-            border: none;
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 100%;
-        }
-
-        .login-btn:hover {
-            background-color: var(--secondary-light);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .auth-toggle {
-            text-align: center;
-            margin-top: 1.5rem;
-            color: var(--text-light);
-        }
-
-        .auth-toggle a {
-            color: var(--secondary-color);
-            font-weight: 600;
-        }
-
-        .auth-toggle a:hover {
-            text-decoration: underline;
-        }
-
         /* Theme Switcher */
         .theme-switcher {
             position: fixed;
@@ -871,11 +903,19 @@
 
     <!-- Main Content -->
     <main>
-        <!-- Login Form (shown when not authenticated) -->
-        <div class="login-container" id="authContainer">
-            <div class="login-card">
+        <!-- Auth Container (shown when not authenticated) -->
+        <div class="auth-container" id="authContainer">
+            <div class="auth-card">
                 <h2>Welcome to Group Chats</h2>
-                <form class="login-form" id="loginForm">
+                
+                <!-- Auth Tabs -->
+                <div class="auth-tabs">
+                    <div class="auth-tab active" data-tab="login">Sign In</div>
+                    <div class="auth-tab" data-tab="register">Register</div>
+                </div>
+                
+                <!-- Login Form -->
+                <form class="auth-form active" id="loginForm">
                     <div class="form-group">
                         <label for="loginEmail">Email</label>
                         <input type="email" id="loginEmail" class="form-control" required>
@@ -884,10 +924,36 @@
                         <label for="loginPassword">Password</label>
                         <input type="password" id="loginPassword" class="form-control" required>
                     </div>
-                    <button type="submit" class="login-btn" id="loginBtn">Sign In</button>
+                    <button type="submit" class="auth-btn" id="loginBtn">
+                        <span id="loginBtnText">Sign In</span>
+                    </button>
                 </form>
+                
+                <!-- Registration Form -->
+                <form class="auth-form" id="registerForm">
+                    <div class="form-group">
+                        <label for="registerName">Full Name</label>
+                        <input type="text" id="registerName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" id="registerEmail" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Password (min 6 characters)</label>
+                        <input type="password" id="registerPassword" class="form-control" minlength="6" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerConfirmPassword">Confirm Password</label>
+                        <input type="password" id="registerConfirmPassword" class="form-control" minlength="6" required>
+                    </div>
+                    <button type="submit" class="auth-btn" id="registerBtn">
+                        <span id="registerBtnText">Create Account</span>
+                    </button>
+                </form>
+                
                 <div class="auth-toggle">
-                    <span>Need an account? Contact church admin</span>
+                    <span id="authToggleText">Need an account? <a href="#" id="authToggleLink">Register</a></span>
                 </div>
             </div>
         </div>
@@ -1072,6 +1138,47 @@
             }
         });
 
+        // Auth tabs functionality
+        const authTabs = document.querySelectorAll('.auth-tab');
+        const authForms = document.querySelectorAll('.auth-form');
+        const authToggleLink = document.getElementById('authToggleLink');
+        const authToggleText = document.getElementById('authToggleText');
+
+        authTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Update active tab
+                authTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Show corresponding form
+                const tabName = tab.dataset.tab;
+                authForms.forEach(form => {
+                    form.classList.remove('active');
+                    if (form.id === `${tabName}Form`) {
+                        form.classList.add('active');
+                    }
+                });
+                
+                // Update toggle text
+                if (tabName === 'login') {
+                    authToggleText.innerHTML = 'Need an account? <a href="#" id="authToggleLink">Register</a>';
+                } else {
+                    authToggleText.innerHTML = 'Already have an account? <a href="#" id="authToggleLink">Sign In</a>';
+                }
+            });
+        });
+
+        // Toggle between login and register forms
+        authToggleLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            const currentTab = document.querySelector('.auth-tab.active');
+            const otherTab = currentTab.dataset.tab === 'login' 
+                ? document.querySelector('.auth-tab[data-tab="register"]')
+                : document.querySelector('.auth-tab[data-tab="login"]');
+            
+            otherTab.click();
+        });
+
         // Request notification permission
         function requestNotificationPermission() {
             console.log('Requesting permission...');
@@ -1149,6 +1256,9 @@
                     email: user.email
                 };
                 
+                // Save user data to database if it doesn't exist
+                saveUserToDatabase(currentUser);
+                
                 // Request notification permission
                 requestNotificationPermission();
                 
@@ -1182,6 +1292,28 @@
                 currentUser = null;
             }
         });
+
+        // Save user to database
+        function saveUserToDatabase(user) {
+            if (!user) return;
+            
+            const userRef = database.ref(`users/${user.uid}`);
+            
+            userRef.once('value').then((snapshot) => {
+                if (!snapshot.exists()) {
+                    // User doesn't exist in database, create new record
+                    userRef.set({
+                        name: user.name,
+                        email: user.email,
+                        createdAt: firebase.database.ServerValue.TIMESTAMP
+                    }).then(() => {
+                        console.log('User saved to database');
+                    }).catch((error) => {
+                        console.error('Error saving user:', error);
+                    });
+                }
+            });
+        }
 
         // Initialize predefined groups
         function initializePredefinedGroups() {
@@ -1226,7 +1358,8 @@
             
             // Show loading state
             const loginBtn = document.getElementById('loginBtn');
-            loginBtn.innerHTML = '<span class="spinner"></span> Signing in...';
+            const loginBtnText = document.getElementById('loginBtnText');
+            loginBtnText.innerHTML = '<span class="spinner"></span> Signing in...';
             loginBtn.disabled = true;
             
             auth.signInWithEmailAndPassword(email, password)
@@ -1235,8 +1368,47 @@
                 })
                 .catch(error => {
                     alert('Login error: ' + error.message);
-                    loginBtn.textContent = 'Sign In';
+                    loginBtnText.textContent = 'Sign In';
                     loginBtn.disabled = false;
+                });
+        });
+
+        // Registration form submission
+        document.getElementById('registerForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('registerName').value.trim();
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+            
+            // Validate passwords match
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
+                return;
+            }
+            
+            // Show loading state
+            const registerBtn = document.getElementById('registerBtn');
+            const registerBtnText = document.getElementById('registerBtnText');
+            registerBtnText.innerHTML = '<span class="spinner"></span> Creating account...';
+            registerBtn.disabled = true;
+            
+            // Create user with email and password
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Update user profile with display name
+                    return userCredential.user.updateProfile({
+                        displayName: name
+                    });
+                })
+                .then(() => {
+                    // Auth state listener will handle the rest
+                })
+                .catch(error => {
+                    alert('Registration error: ' + error.message);
+                    registerBtnText.textContent = 'Create Account';
+                    registerBtn.disabled = false;
                 });
         });
 
