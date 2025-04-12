@@ -13,7 +13,6 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js"></script>
     
     <style>
         :root {
@@ -41,7 +40,6 @@
             --message-action-hover: #d4a017;
             --message-action-bg: #000000;
             --message-action-bg-hover: rgba(0, 0, 0, 0.7);
-            --notification-badge: #dc3545;
         }
 
         .dark-theme {
@@ -64,7 +62,6 @@
             --message-action-hover: #e6b800;
             --message-action-bg: rgba(255, 255, 255, 0.05);
             --message-action-bg-hover: rgba(255, 255, 255, 0.1);
-            --notification-badge: #ff6b6b;
         }
 
         * {
@@ -135,123 +132,6 @@
             color: var(--secondary-color);
         }
 
-        /* Auth Container */
-        .auth-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: calc(100vh - 80px);
-            padding: 2rem 0;
-        }
-
-        /* Auth Card */
-        .auth-card {
-            background-color: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            box-shadow: var(--box-shadow);
-            width: 100%;
-            max-width: 400px;
-            transition: var(--transition);
-        }
-
-        .auth-card h2 {
-            text-align: center;
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-        }
-
-        .auth-tabs {
-            display: flex;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid var(--text-light);
-        }
-
-        .auth-tab {
-            flex: 1;
-            text-align: center;
-            padding: 0.5rem;
-            cursor: pointer;
-            transition: var(--transition);
-            border-bottom: 2px solid transparent;
-        }
-
-        .auth-tab.active {
-            border-bottom: 2px solid var(--secondary-color);
-            font-weight: 600;
-            color: var(--secondary-color);
-        }
-
-        .auth-form {
-            display: none;
-        }
-
-        .auth-form.active {
-            display: block;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-light);
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 0.8rem 1rem;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            font-family: inherit;
-            font-size: 1rem;
-            transition: var(--transition);
-            background-color: var(--bg-color);
-            color: var(--text-color);
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--secondary-color);
-            box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.2);
-        }
-
-        .auth-btn {
-            background-color: var(--secondary-color);
-            color: #333;
-            border: none;
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 100%;
-        }
-
-        .auth-btn:hover {
-            background-color: var(--secondary-light);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .auth-toggle {
-            text-align: center;
-            margin-top: 1.5rem;
-            color: var(--text-light);
-        }
-
-        .auth-toggle a {
-            color: var(--secondary-color);
-            font-weight: 600;
-        }
-
-        .auth-toggle a:hover {
-            text-decoration: underline;
-        }
-
         /* Main Layout */
         .main-layout {
             display: flex;
@@ -314,7 +194,6 @@
             box-shadow: var(--box-shadow);
             transition: var(--transition);
             cursor: pointer;
-            position: relative;
         }
 
         .group-card:hover {
@@ -331,9 +210,6 @@
             font-weight: 600;
             margin-bottom: 0.3rem;
             color: var(--primary-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
 
         .group-description {
@@ -390,23 +266,6 @@
 
         .leave-btn:hover {
             background-color: #c82333;
-        }
-
-        /* Notification Badge */
-        .notification-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background-color: var(--notification-badge);
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            font-weight: bold;
         }
 
         /* Chat Main Area */
@@ -742,6 +601,91 @@
             font-weight: 600;
         }
 
+        /* Login Form */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 80px);
+        }
+
+        .login-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--box-shadow);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-card h2 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .login-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .login-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .login-form input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.2);
+        }
+
+        .login-btn {
+            background-color: var(--secondary-color);
+            color: #333;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+
+        .login-btn:hover {
+            background-color: var(--secondary-light);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .auth-toggle {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--text-light);
+        }
+
+        .auth-toggle a {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        .auth-toggle a:hover {
+            text-decoration: underline;
+        }
+
         /* Theme Switcher */
         .theme-switcher {
             position: fixed;
@@ -903,19 +847,11 @@
 
     <!-- Main Content -->
     <main>
-        <!-- Auth Container (shown when not authenticated) -->
-        <div class="auth-container" id="authContainer">
-            <div class="auth-card">
+        <!-- Login Form (shown when not authenticated) -->
+        <div class="login-container" id="authContainer">
+            <div class="login-card">
                 <h2>Welcome to Group Chats</h2>
-                
-                <!-- Auth Tabs -->
-                <div class="auth-tabs">
-                    <div class="auth-tab active" data-tab="login">Sign In</div>
-                    <div class="auth-tab" data-tab="register">Register</div>
-                </div>
-                
-                <!-- Login Form -->
-                <form class="auth-form active" id="loginForm">
+                <form class="login-form" id="loginForm">
                     <div class="form-group">
                         <label for="loginEmail">Email</label>
                         <input type="email" id="loginEmail" class="form-control" required>
@@ -924,36 +860,10 @@
                         <label for="loginPassword">Password</label>
                         <input type="password" id="loginPassword" class="form-control" required>
                     </div>
-                    <button type="submit" class="auth-btn" id="loginBtn">
-                        <span id="loginBtnText">Sign In</span>
-                    </button>
+                    <button type="submit" class="login-btn" id="loginBtn">Sign In</button>
                 </form>
-                
-                <!-- Registration Form -->
-                <form class="auth-form" id="registerForm">
-                    <div class="form-group">
-                        <label for="registerName">Full Name</label>
-                        <input type="text" id="registerName" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerEmail">Email</label>
-                        <input type="email" id="registerEmail" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerPassword">Password (min 6 characters)</label>
-                        <input type="password" id="registerPassword" class="form-control" minlength="6" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="registerConfirmPassword">Confirm Password</label>
-                        <input type="password" id="registerConfirmPassword" class="form-control" minlength="6" required>
-                    </div>
-                    <button type="submit" class="auth-btn" id="registerBtn">
-                        <span id="registerBtnText">Create Account</span>
-                    </button>
-                </form>
-                
                 <div class="auth-toggle">
-                    <span id="authToggleText">Need an account? <a href="#" id="authToggleLink">Register</a></span>
+                    <span>Need an account? Contact church admin</span>
                 </div>
             </div>
         </div>
@@ -1064,7 +974,7 @@
             apiKey: "AIzaSyDGuhlaRcSnRndX6se_tA48MD1eLjywFBQ",
             authDomain: "aogat-497c9.firebaseapp.com",
             projectId: "aogat-497c9",
-            storageBucket: "aogat-497c9.appspot.com",
+            storageBucket: "aogat-497c9.firebasestorage.app",
             messagingSenderId: "236403272662",
             appId: "1:236403272662:web:0ae9a7a65a80bc98ef1277",
             measurementId: "G-MDBQD52DS6"
@@ -1074,7 +984,6 @@
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const database = firebase.database();
-        const messaging = firebase.messaging();
 
         // Predefined groups data
         const predefinedGroups = {
@@ -1138,115 +1047,7 @@
             }
         });
 
-        // Auth tabs functionality
-        const authTabs = document.querySelectorAll('.auth-tab');
-        const authForms = document.querySelectorAll('.auth-form');
-        const authToggleLink = document.getElementById('authToggleLink');
-        const authToggleText = document.getElementById('authToggleText');
-
-        authTabs.forEach(tab => {
-            tab.addEventListener('click', (e) => {
-                e.preventDefault();
-                
-                // Update active tab
-                authTabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                
-                // Show corresponding form
-                const tabName = tab.dataset.tab;
-                authForms.forEach(form => {
-                    form.classList.remove('active');
-                    if (form.id === `${tabName}Form`) {
-                        form.classList.add('active');
-                    }
-                });
-                
-                // Update toggle text
-                if (tabName === 'login') {
-                    authToggleText.innerHTML = 'Need an account? <a href="#" id="authToggleLink">Register</a>';
-                } else {
-                    authToggleText.innerHTML = 'Already have an account? <a href="#" id="authToggleLink">Sign In</a>';
-                }
-            });
-        });
-
-        // Toggle between login and register forms
-        authToggleLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            const currentTab = document.querySelector('.auth-tab.active');
-            const otherTab = currentTab.dataset.tab === 'login' 
-                ? document.querySelector('.auth-tab[data-tab="register"]')
-                : document.querySelector('.auth-tab[data-tab="login"]');
-            
-            otherTab.click();
-        });
-
-        // Request notification permission
-        function requestNotificationPermission() {
-            console.log('Requesting permission...');
-            Notification.requestPermission().then((permission) => {
-                if (permission === 'granted') {
-                    console.log('Notification permission granted.');
-                    // Get FCM token
-                    getFCMToken();
-                } else {
-                    console.log('Unable to get permission to notify.');
-                }
-            });
-        }
-
-        // Get FCM token
-        function getFCMToken() {
-            messaging.getToken({ vapidKey: 'YOUR_VAPID_KEY' }).then((currentToken) => {
-                if (currentToken) {
-                    console.log('FCM Token:', currentToken);
-                    // Save the token to the database
-                    saveTokenToDatabase(currentToken);
-                } else {
-                    console.log('No registration token available. Request permission to generate one.');
-                }
-            }).catch((err) => {
-                console.log('An error occurred while retrieving token. ', err);
-            });
-        }
-
-        // Save token to database
-        function saveTokenToDatabase(token) {
-            if (!currentUser) return;
-            
-            database.ref(`users/${currentUser.uid}/fcmToken`).set(token)
-                .then(() => {
-                    console.log('Token saved to database');
-                })
-                .catch((error) => {
-                    console.error('Error saving token:', error);
-                });
-        }
-
-        // Handle incoming messages
-        messaging.onMessage((payload) => {
-            console.log('Message received. ', payload);
-            
-            // Show notification
-            const notificationTitle = payload.notification.title;
-            const notificationOptions = {
-                body: payload.notification.body,
-                icon: '/favicon.ico'
-            };
-            
-            if (Notification.permission === 'granted') {
-                new Notification(notificationTitle, notificationOptions);
-            }
-            
-            // Update unread count if not on the chat page for this group
-            const groupId = payload.data.groupId;
-            if (groupId !== currentGroupId) {
-                updateUnreadCount(groupId, true);
-            }
-        });
-
         // Auth state listener
-        let currentUser = null;
         auth.onAuthStateChanged(user => {
             if (user) {
                 // User is signed in
@@ -1258,12 +1059,6 @@
                     name: user.displayName || user.email.split('@')[0],
                     email: user.email
                 };
-                
-                // Save user data to database if it doesn't exist
-                saveUserToDatabase(currentUser);
-                
-                // Request notification permission
-                requestNotificationPermission();
                 
                 // Check if we're viewing a specific group chat
                 const urlParams = new URLSearchParams(window.location.search);
@@ -1295,28 +1090,6 @@
                 currentUser = null;
             }
         });
-
-        // Save user to database
-        function saveUserToDatabase(user) {
-            if (!user) return;
-            
-            const userRef = database.ref(`users/${user.uid}`);
-            
-            userRef.once('value').then((snapshot) => {
-                if (!snapshot.exists()) {
-                    // User doesn't exist in database, create new record
-                    userRef.set({
-                        name: user.name,
-                        email: user.email,
-                        createdAt: firebase.database.ServerValue.TIMESTAMP
-                    }).then(() => {
-                        console.log('User saved to database');
-                    }).catch((error) => {
-                        console.error('Error saving user:', error);
-                    });
-                }
-            });
-        }
 
         // Initialize predefined groups
         function initializePredefinedGroups() {
@@ -1361,8 +1134,7 @@
             
             // Show loading state
             const loginBtn = document.getElementById('loginBtn');
-            const loginBtnText = document.getElementById('loginBtnText');
-            loginBtnText.innerHTML = '<span class="spinner"></span> Signing in...';
+            loginBtn.innerHTML = '<span class="spinner"></span> Signing in...';
             loginBtn.disabled = true;
             
             auth.signInWithEmailAndPassword(email, password)
@@ -1371,83 +1143,16 @@
                 })
                 .catch(error => {
                     alert('Login error: ' + error.message);
-                    loginBtnText.textContent = 'Sign In';
+                    loginBtn.textContent = 'Sign In';
                     loginBtn.disabled = false;
                 });
         });
 
-        // Registration form submission - FIXED FOR MOBILE
-        document.getElementById('registerForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            const name = document.getElementById('registerName').value.trim();
-            const email = document.getElementById('registerEmail').value;
-            const password = document.getElementById('registerPassword').value;
-            const confirmPassword = document.getElementById('registerConfirmPassword').value;
-            
-            // Validate inputs
-            if (!name || !email || !password || !confirmPassword) {
-                alert('Please fill in all fields');
-                return;
-            }
-            
-            if (password !== confirmPassword) {
-                alert('Passwords do not match');
-                return;
-            }
-            
-            if (password.length < 6) {
-                alert('Password must be at least 6 characters');
-                return;
-            }
-            
-            // Show loading state
-            const registerBtn = document.getElementById('registerBtn');
-            const registerBtnText = document.getElementById('registerBtnText');
-            registerBtn.disabled = true;
-            registerBtnText.innerHTML = '<span class="spinner"></span> Creating account...';
-            
-            try {
-                // Create user with email and password
-                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-                
-                // Update user profile with display name
-                await userCredential.user.updateProfile({
-                    displayName: name
-                });
-                
-                // Save user to database
-                await saveUserToDatabase({
-                    uid: userCredential.user.uid,
-                    name: name,
-                    email: email
-                });
-                
-                // Auth state listener will handle the UI change
-            } catch (error) {
-                console.error('Registration error:', error);
-                let errorMessage = 'Registration failed. Please try again.';
-                
-                if (error.code === 'auth/email-already-in-use') {
-                    errorMessage = 'This email is already in use.';
-                } else if (error.code === 'auth/invalid-email') {
-                    errorMessage = 'Please enter a valid email address.';
-                } else if (error.code === 'auth/weak-password') {
-                    errorMessage = 'Password should be at least 6 characters.';
-                }
-                
-                alert(errorMessage);
-                registerBtnText.textContent = 'Create Account';
-                registerBtn.disabled = false;
-            }
-        });
-
         // Chat functionality
+        let currentUser = null;
         let currentGroupId = null;
         let currentMessageToDelete = null;
         let lastDateDisplayed = null;
-        let unreadCounts = {};
         
         // Load all groups
         function loadGroups() {
@@ -1463,126 +1168,68 @@
                     return { groupId, ...groupData };
                 }).sort((a, b) => a.name.localeCompare(b.name));
                 
-                // Load unread counts for each group
-                loadUnreadCounts().then(() => {
-                    groupsArray.forEach(group => {
-                        const groupCard = document.createElement('div');
-                        groupCard.className = 'group-card';
-                        
-                        // Check if user is a member
-                        const isMember = group.members && group.members[currentUser.uid];
-                        
-                        // Get unread count for this group
-                        const unreadCount = unreadCounts[group.groupId] || 0;
-                        
-                        groupCard.innerHTML = `
-                            <div class="group-name">
-                                ${group.name}
-                                ${unreadCount > 0 ? `<span class="notification-badge">${unreadCount}</span>` : ''}
+                groupsArray.forEach(group => {
+                    const groupCard = document.createElement('div');
+                    groupCard.className = 'group-card';
+                    
+                    // Check if user is a member
+                    const isMember = group.members && group.members[currentUser.uid];
+                    
+                    groupCard.innerHTML = `
+                        <div class="group-name">${group.name}</div>
+                        <div class="group-description">${group.description || 'No description'}</div>
+                        <div class="group-meta">
+                            <div class="group-members">
+                                <i class="fas fa-users"></i>
+                                <span>${group.members ? Object.keys(group.members).length : 0} members</span>
                             </div>
-                            <div class="group-description">${group.description || 'No description'}</div>
-                            <div class="group-meta">
-                                <div class="group-members">
-                                    <i class="fas fa-users"></i>
-                                    <span>${group.members ? Object.keys(group.members).length : 0} members</span>
-                                </div>
-                                <div class="group-actions">
-                                    ${isMember ? 
-                                        `<button class="leave-btn" data-group-id="${group.groupId}">
-                                            <i class="fas fa-sign-out-alt"></i> Leave
-                                        </button>` :
-                                        `<button class="join-btn" data-group-id="${group.groupId}">
-                                            <i class="fas fa-sign-in-alt"></i> Join
-                                        </button>`
-                                    }
-                                </div>
+                            <div class="group-actions">
+                                ${isMember ? 
+                                    `<button class="leave-btn" data-group-id="${group.groupId}">
+                                        <i class="fas fa-sign-out-alt"></i> Leave
+                                    </button>` :
+                                    `<button class="join-btn" data-group-id="${group.groupId}">
+                                        <i class="fas fa-sign-in-alt"></i> Join
+                                    </button>`
+                                }
                             </div>
-                        `;
-                        
-                        groupCard.addEventListener('click', () => {
-                            if (group.members && group.members[currentUser.uid]) {
-                                // Navigate to the chat page for this group
-                                window.location.href = `?groupId=${group.groupId}`;
-                            }
-                        });
-                        
-                        // Add event listeners to buttons
-                        const joinBtn = groupCard.querySelector('.join-btn');
-                        const leaveBtn = groupCard.querySelector('.leave-btn');
-                        
-                        if (joinBtn) {
-                            joinBtn.addEventListener('click', (e) => {
-                                e.stopPropagation();
-                                joinGroup(joinBtn.dataset.groupId);
-                            });
+                        </div>
+                    `;
+                    
+                    groupCard.addEventListener('click', () => {
+                        if (group.members && group.members[currentUser.uid]) {
+                            // Navigate to the chat page for this group
+                            window.location.href = `?groupId=${group.groupId}`;
                         }
-                        
-                        if (leaveBtn) {
-                            leaveBtn.addEventListener('click', (e) => {
-                                e.stopPropagation();
-                                leaveGroup(leaveBtn.dataset.groupId);
-                            });
-                        }
-                        
-                        groupsList.appendChild(groupCard);
                     });
-                });
-            });
-        }
-        
-        // Load unread message counts for all groups
-        function loadUnreadCounts() {
-            return new Promise((resolve) => {
-                if (!currentUser) {
-                    resolve();
-                    return;
-                }
-                
-                database.ref(`userUnreadCounts/${currentUser.uid}`).once('value').then((snapshot) => {
-                    unreadCounts = snapshot.val() || {};
-                    resolve();
-                }).catch((error) => {
-                    console.error('Error loading unread counts:', error);
-                    unreadCounts = {};
-                    resolve();
-                });
-            });
-        }
-        
-        // Update unread count for a group
-        function updateUnreadCount(groupId, increment = false) {
-            if (!currentUser) return;
-            
-            const updates = {};
-            const currentCount = unreadCounts[groupId] || 0;
-            
-            if (increment) {
-                updates[`userUnreadCounts/${currentUser.uid}/${groupId}`] = currentCount + 1;
-                unreadCounts[groupId] = currentCount + 1;
-            } else {
-                updates[`userUnreadCounts/${currentUser.uid}/${groupId}`] = 0;
-                unreadCounts[groupId] = 0;
-            }
-            
-            database.ref().update(updates)
-                .then(() => {
-                    // Refresh groups list to update badge counts
-                    if (document.getElementById('groupsListPage').style.display !== 'none') {
-                        loadGroups();
+                    
+                    // Add event listeners to buttons
+                    const joinBtn = groupCard.querySelector('.join-btn');
+                    const leaveBtn = groupCard.querySelector('.leave-btn');
+                    
+                    if (joinBtn) {
+                        joinBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            joinGroup(joinBtn.dataset.groupId);
+                        });
                     }
-                })
-                .catch((error) => {
-                    console.error('Error updating unread count:', error);
+                    
+                    if (leaveBtn) {
+                        leaveBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            leaveGroup(leaveBtn.dataset.groupId);
+                        });
+                    }
+                    
+                    groupsList.appendChild(groupCard);
                 });
+            });
         }
         
         // Load a specific group chat
         function loadGroupChat(groupId) {
             currentGroupId = groupId;
             lastDateDisplayed = null; // Reset date tracking when loading new chat
-            
-            // Reset unread count for this group
-            updateUnreadCount(groupId, false);
             
             // Load group info
             const groupRef = database.ref('groups/' + groupId);
@@ -1874,9 +1521,6 @@
                 newMessageRef.set(messageData)
                     .then(() => {
                         messageInput.value = '';
-                        
-                        // Send push notification to all group members except sender
-                        sendPushNotification(currentGroupId, currentUser.name, messageText);
                     })
                     .catch(error => {
                         console.error('Error sending message:', error);
@@ -1884,44 +1528,6 @@
                     });
             }
         });
-        
-        // Send push notification to group members
-        function sendPushNotification(groupId, senderName, messageText) {
-            // Get all group members except current user
-            database.ref(`groups/${groupId}/members`).once('value').then((snapshot) => {
-                const members = snapshot.val() || {};
-                const memberIds = Object.keys(members).filter(uid => uid !== currentUser.uid);
-                
-                if (memberIds.length === 0) return;
-                
-                // Get FCM tokens for all members
-                const promises = memberIds.map(uid => {
-                    return database.ref(`users/${uid}/fcmToken`).once('value');
-                });
-                
-                Promise.all(promises).then((snapshots) => {
-                    const tokens = snapshots
-                        .map(snap => snap.val())
-                        .filter(token => token);
-                    
-                    if (tokens.length === 0) return;
-                    
-                    // Send notification to each token
-                    // In a real app, you would send this to your server which would then
-                    // send the notifications via Firebase Cloud Messaging
-                    console.log('Would send notifications to:', tokens);
-                    console.log('Notification content:', {
-                        title: `New message in ${document.getElementById('currentGroupName').textContent}`,
-                        body: `${senderName}: ${messageText}`,
-                        groupId: groupId
-                    });
-                    
-                    // For demo purposes, we'll just log this
-                    // In production, you would make an HTTP request to your server
-                    // which would handle sending the actual push notifications
-                });
-            });
-        }
         
         // Back to groups button
         document.getElementById('backToGroupsBtn').addEventListener('click', () => {
@@ -2025,21 +1631,6 @@
                     card.style.display = 'none';
                 }
             });
-        });
-
-        // Track when user is active/inactive
-        document.addEventListener('visibilitychange', () => {
-            if (document.visibilityState === 'visible' && currentGroupId) {
-                // User is back on the page, reset unread count for current group
-                updateUnreadCount(currentGroupId, false);
-            }
-        });
-
-        // Reset unread counts when page is focused
-        window.addEventListener('focus', () => {
-            if (currentGroupId) {
-                updateUnreadCount(currentGroupId, false);
-            }
         });
     </script>
 </body>
