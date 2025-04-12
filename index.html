@@ -1064,7 +1064,7 @@
             apiKey: "AIzaSyDGuhlaRcSnRndX6se_tA48MD1eLjywFBQ",
             authDomain: "aogat-497c9.firebaseapp.com",
             projectId: "aogat-497c9",
-            storageBucket: "aogat-497c9.firebasestorage.app",
+            storageBucket: "aogat-497c9.appspot.com",
             messagingSenderId: "236403272662",
             appId: "1:236403272662:web:0ae9a7a65a80bc98ef1277",
             measurementId: "G-MDBQD52DS6"
@@ -1145,7 +1145,9 @@
         const authToggleText = document.getElementById('authToggleText');
 
         authTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
+            tab.addEventListener('click', (e) => {
+                e.preventDefault();
+                
                 // Update active tab
                 authTabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
@@ -1244,6 +1246,7 @@
         });
 
         // Auth state listener
+        let currentUser = null;
         auth.onAuthStateChanged(user => {
             if (user) {
                 // User is signed in
@@ -1374,7 +1377,7 @@
         });
 
         // Registration form submission
-        document.getElementById('registerForm').addEventListener('submit', (e) => {
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const name = document.getElementById('registerName').value.trim();
@@ -1394,26 +1397,24 @@
             registerBtnText.innerHTML = '<span class="spinner"></span> Creating account...';
             registerBtn.disabled = true;
             
-            // Create user with email and password
-            auth.createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // Update user profile with display name
-                    return userCredential.user.updateProfile({
-                        displayName: name
-                    });
-                })
-                .then(() => {
-                    // Auth state listener will handle the rest
-                })
-                .catch(error => {
-                    alert('Registration error: ' + error.message);
-                    registerBtnText.textContent = 'Create Account';
-                    registerBtn.disabled = false;
+            try {
+                // Create user with email and password
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                
+                // Update user profile with display name
+                await userCredential.user.updateProfile({
+                    displayName: name
                 });
+                
+                // Auth state listener will handle the rest
+            } catch (error) {
+                alert('Registration error: ' + error.message);
+                registerBtnText.textContent = 'Create Account';
+                registerBtn.disabled = false;
+            }
         });
 
         // Chat functionality
-        let currentUser = null;
         let currentGroupId = null;
         let currentMessageToDelete = null;
         let lastDateDisplayed = null;
